@@ -4,10 +4,10 @@ cmake_minimum_required(VERSION 3.15)
 # Define the options for the anira library
 # ==============================================================================
 
-# Shall the library be built as a shared library?
-option(ANIRA_X_BELA_WITH_INSTALL "Add install targets" ON)
-option(ANIRA_X_BELA_INFERENCE_EXAMPLE "Build the example anira-x-bela-inference" ON)
-option(ANIRA_X_BELA_BENCHMARK_EXAMPLE "Build the example anira-x-bela-benchmark" OFF)
+option(ANIRA_BELA_INFERENCE_EXAMPLE "Build the example anira-bela-inference" ON)
+option(ANIRA_BELA_BENCHMARK_EXAMPLE "Build the example anira-bela-benchmark" OFF)
+
+option(ANIRA_WITH_INSTALL "Bundle the anira library" OFF) # This only works if anira is added as a submodule
 
 # ==============================================================================
 # Get project version from latest git tag
@@ -32,22 +32,23 @@ string(SUBSTRING ${PROJECT_VERSION_FULL} 1 -1 PROJECT_VERSION_FULL)
 # ==============================================================================
 
 set(PROJECT_NAME "anira-bela-examples")
-
 project(${PROJECT_NAME} VERSION ${PROJECT_VERSION_SHORT})
-
 message(STATUS "Building ${PROJECT_NAME} - Version: ${PROJECT_VERSION_SHORT} (${PROJECT_VERSION_FULL})")
 
 # ==============================================================================
 # Add examples
 # ==============================================================================
 
-add_subdirectory(anira-x-bela-inference)
-add_subdirectory(anira-x-bela-benchmark)
-
-# ==============================================================================
-# Add install targets
-# ==============================================================================
-
-if(ANIRA_WITH_INSTALL)
-    include(cmake/install.cmake)
+if(ANIRA_BELA_INFERENCE_EXAMPLE)
+    add_subdirectory(anira-bela-inference)
 endif()
+if(ANIRA_BELA_BENCHMARK_EXAMPLE)
+    add_subdirectory(anira-bela-benchmark)
+endif()
+
+# ==============================================================================
+# Set the install prefix
+# ==============================================================================
+
+set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/${PROJECT_NAME}-${PROJECT_VERSION_SHORT}" CACHE PATH "Where the library will be installed to" FORCE)
+message(STATUS "CMAKE_INSTALL_PREFIX is set to ${CMAKE_INSTALL_PREFIX}")

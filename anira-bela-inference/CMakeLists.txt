@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.15)
 
-set(PROJECT_NAME "anira-x-bela-inference")
+################################################################
+# Setup the project
+################################################################
 
+set(PROJECT_NAME "anira-bela-inference")
 project(${PROJECT_NAME} VERSION ${PROJECT_VERSION_SHORT})
-
 message(STATUS "Building ${PROJECT_NAME} - Version: ${PROJECT_VERSION_SHORT} (${PROJECT_VERSION_FULL})")
 
 # Sets the cpp language minimum
@@ -53,20 +55,14 @@ find_library(MATHNEON_LIB REQUIRED
 # Setting up anira
 ################################################################
 
-# The ANIRA_WITH_INSTALL option bundles the anira library with the executable
-# This only works if anira is added as a submodule (see below)
-if(ANIRA_X_BELA_WITH_INSTALL)
-    set(ANIRA_WITH_INSTALL ON)
-endif()
-
 # There are two ways adding anira to your project:
 
 # 1. Add as submodule and use add_subdirectory
-add_subdirectory(anira) # set this to the path of the anira library
+# add_subdirectory(${CMAKE_SOURCE_DIR}/anira ${CMAKE_CURRENT_BINARY_DIR}/anira) # set this to the path of the anira library
 
 # 2. Use the precompiled version of anira
-# list(APPEND CMAKE_PREFIX_PATH "anira-0.1.0-bela") # set this to the path of the precompiled anira library
-# find_package(anira REQUIRED)
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/anira-1.0.1-Linux-armv7l") # set this to the path of the precompiled anira library
+find_package(anira REQUIRED)
 
 ################################################################
 # Adding the executable
@@ -80,8 +76,8 @@ add_executable(${PROJECT_NAME} ${SRC_FILES})
 # Define the path of the models
 ################################################################
 
-if(NOT DEFINED ANIRA_X_BELA_MODELS_PATH)
-    set(ANIRA_X_BELA_MODELS_PATH "/root/models")
+if(NOT DEFINED ANIRA_BELA_MODELS_PATH)
+    set(ANIRA_BELA_MODELS_PATH "/root/models")
 endif()
 
 target_compile_definitions(
@@ -117,3 +113,9 @@ target_link_libraries(
     pthread
     rt
 )
+
+################################################################
+# Setup the install target
+################################################################
+
+include(cmake/install.cmake)
