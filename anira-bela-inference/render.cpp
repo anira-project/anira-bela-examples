@@ -13,9 +13,9 @@ Anira x Bela Example
 #include <Bela.h>
 #include <libraries/AudioFile/AudioFile.h>
 #include <anira/anira.h>
-#include "../inference-configs/SimpleGainConfig.h"
+#include "../models/configs/SimpleGainConfig.h"
 
-std::string g_filename = "ts9_test1_out_FP32.wav";	// Name of the sound file (in project folder)
+std::string g_filename = AUDIO_PATH + std::string("/house_drum_loop.wav");	// Name of the sound file (in project folder)
 std::vector<float> g_sample_buffer;				// Buffer that holds the sound file
 int g_read_pointer = 0;							// Position of the last frame we played
 

@@ -52,19 +52,6 @@ find_library(MATHNEON_LIB REQUIRED
 )
 
 ################################################################
-# Setting up anira
-################################################################
-
-# There are two ways adding anira to your project:
-
-# 1. Add as submodule and use add_subdirectory
-# add_subdirectory(${CMAKE_SOURCE_DIR}/anira ${CMAKE_CURRENT_BINARY_DIR}/anira) # set this to the path of the anira library
-
-# 2. Use the precompiled version of anira
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/anira-1.0.1-Linux-armv7l") # set this to the path of the precompiled anira library
-find_package(anira REQUIRED)
-
-################################################################
 # Adding the executable
 ################################################################
 
@@ -76,13 +63,9 @@ add_executable(${PROJECT_NAME} ${SRC_FILES})
 # Define the path of the models
 ################################################################
 
-if(NOT DEFINED ANIRA_BELA_MODELS_PATH)
-    set(ANIRA_BELA_MODELS_PATH "/root/models")
-endif()
-
 target_compile_definitions(
     ${PROJECT_NAME} PRIVATE
-    MODELS_PATH="/root/models"
+    AUDIO_PATH="/root/audio"
 )
 
 ################################################################
