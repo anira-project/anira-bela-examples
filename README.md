@@ -9,6 +9,8 @@ All examples are meant to be cross-compiled in the [xc-bela-container](https://g
 
 The cmake toolchain file to use with these examples is [Toolchain_Bela.cmake](./Toolchain_Bela.cmake).
 
+> **Note:** More information about the anira library can be found in the [anira repository](https://github.com/anira-project/anira). An extensive usage guide is provided [here](https://github.com/anira-project/anira/blob/main/docs/anira-usage.md) and more information about benchmarks with anira can be found [here](https://github.com/anira-project/anira/blob/main/docs/benchmark-usage.md).
+
 ## Options
 
 The examples can be activated with the following flags:
@@ -67,7 +69,7 @@ scp -r path/to/anira-bela-examples/models/ root@192.168.7.2:/root/models/
 For the [anira-bela-inference](./anira-bela-inference/) example, copy the audio file to the Bela board. By default the audio file path is set to `/root/audio/`. You can change this in the [CMakeLists.txt](./anira-bela-inference/CMakeLists.txt) of the [anira-bela-inference](./anira-bela-inference/) example.
 
 ```bash
-scp path/to/anira-bela-examples/audio/test.wav root@192.168.7.2:/root/audio/
+scp -r path/to/anira-bela-examples/audio/ root@192.168.7.2:/root/audio/
 ```
 
 SSH into the Bela board and run the examples.
