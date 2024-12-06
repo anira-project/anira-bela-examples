@@ -14,7 +14,7 @@ The cmake toolchain file to use with these examples is [Toolchain_Bela.cmake](./
 The examples can be activated with the following flags:
 
 - `DANIRA_BELA_INFERENCE=ON` (default is `ON`)
-- `DANIRA_BELA_BENCHMARK=ON` (default is `OFF`)
+- `DANIRA_BELA_BENCHMARK=ON` (default is `ON`)
 
 When the anira library is added as a subdirectory (default see [CMakeLists.txt](./CMakeLists.txt) section Setting up anira), the following options can be set:
 
@@ -22,7 +22,7 @@ When the anira library is added as a subdirectory (default see [CMakeLists.txt](
 
 This will make sure that the anira library is bundeled with the examples when installing them.
 
-If you don't want to bundle the anira library with the install artifacts, set this option to `OFF`. This requires that the anira library is installed on the bela board under the path `/root/anira`. This works by simple copying the [latest release](https://github.com/anira-project/anira/releases/latest) of the anira library there. If want to use the [anira-bela-benchmark](./anira-bela-benchmark/) example, you need to build the anira library yourself with the `ANIRA_WITH_BENCHMARK=ON` option, install and then copy the library to the bela board.
+If you don't want to bundle the anira library with the install artifacts, set this option to `OFF`. This requires that the anira library is installed on the bela board under the path `/root/anira`. This works by simply copying the [latest release](https://github.com/anira-project/anira/releases/latest) of the anira library there. If want to use the [anira-bela-benchmark](./anira-bela-benchmark/) example, you need to build the anira library yourself with the `ANIRA_WITH_BENCHMARK=ON` option, install and then copy the library to the bela board.
 
 ## Step by step guide (using anira as a subdirectory)
 
