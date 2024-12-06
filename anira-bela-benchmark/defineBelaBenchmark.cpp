@@ -3,13 +3,17 @@
 #include <anira/anira.h>
 #include <anira/benchmark.h>
 
+#include "../models/configs/HybridNNConfig.h"
+#include "../models/configs/HybridNNPrePostProcessor.h"
+#include "../models/configs/SimpleGainConfig.h"
+
 /* ============================================================ *
  * ========================= Configs ========================== *
  * ============================================================ */
 
-#define NUM_ITERATIONS 50
-#define NUM_REPETITIONS 10
-#define BUFFER_SIZE 2048
+#define NUM_ITERATIONS 5
+#define NUM_REPETITIONS 2
+#define BUFFER_SIZE 512
 #define SAMPLE_RATE 44100
 
 /* ============================================================ *
@@ -18,24 +22,16 @@
 
 typedef anira::benchmark::ProcessBlockFixture ProcessBlockFixture;
 
-anira::PrePostProcessor my_pp_processor;
-anira::InferenceConfig my_inference_config(
-	"model.pt",
-	{{1, 1, 2048}},
-	{{1, 1, 2048}},
-	21.53f,
-	0,
-	true,
-	0.f,
-	false,
-	1
-);
+anira::InferenceConfig my_inference_config = gain_config;
+anira::PrePostProcessor my_pp_processor(gain_config);
+// anira::InferenceConfig my_inference_config = hybridnn_config;
+// HybridNNPrePostProcessor my_pp_processor;
 
 BENCHMARK_DEFINE_F(ProcessBlockFixture, BM_SIMPLE)(::benchmark::State& state) {
 
     // The buffer size return in get_buffer_size() is populated by state.range(0) param of the google benchmark
-    anira::HostAudioConfig host_config = {1, (size_t) get_buffer_size(), SAMPLE_RATE};
-    anira::InferenceBackend inference_backend = anira::LIBTORCH;
+    anira::HostAudioConfig host_config = {(size_t) get_buffer_size(), SAMPLE_RATE};
+    anira::InferenceBackend inference_backend = anira::InferenceBackend::ONNX;
 
     m_inference_handler = std::make_unique<anira::InferenceHandler>(my_pp_processor, my_inference_config);
     m_inference_handler->prepare(host_config);
@@ -54,8 +50,7 @@ BENCHMARK_DEFINE_F(ProcessBlockFixture, BM_SIMPLE)(::benchmark::State& state) {
         
         m_inference_handler->process(m_buffer->get_array_of_write_pointers(), get_buffer_size());
 
-        // Using yield here is important to let the inference thread run
-        // Depending on the scheduler, yield does different things, a first-in-first-out realtime scheduler (SCHED_FIFO in Linux) would suspend the current thread and put it on the back of the queue of the same-priority threads that are ready to run (and if there are no other threads at the same priority, yield has no effect). 
+        // Using yield here is important to let the inference thread run as the Bela board is a single-core system
         while (!buffer_processed()) {
             std::this_thread::yield();
         }
