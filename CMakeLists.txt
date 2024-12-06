@@ -56,10 +56,6 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/anira) # set this to the path of the anira 
 # Define the path of the models on the Bela board
 ################################################################
 
-if(NOT DEFINED ANIRA_BELA_MODELS_PATH)
-    set(ANIRA_BELA_MODELS_PATH "/root/models")
-endif()
-
 add_compile_definitions(MODELS_PATH="/root/models")
 
 ################################################################

@@ -5,7 +5,7 @@ Examples to use anira on the Bela platform. There are two examples provided in t
 - [anira-bela-inference](./anira-bela-inference/) is a simple example that demonstrates how to use anira to infer a model on the Bela platform.
 - [anira-bela-benchmark](./anira-bela-benchmark/) is a simple example that demonstrates how to use anira to benchmark a model on the Bela platform.
 
-All examples are meant to be cross-compiled in the [xc-bela-container](https://github.com/pelinski/xc-bela-container). To set up the environment, please follow closely the instructions in the README of the [xc-bela-container](https://github.com/pelinski/xc-bela-container) repository and make sure that the `libbelafull.so` has been copied to the `Bela/lib/` directory on your Bela board.
+All examples are meant to be cross-compiled in the [xc-bela-container](https://github.com/pelinski/xc-bela-container). To set up the environment, please follow closely the instructions in the README of the [xc-bela-container](https://github.com/pelinski/xc-bela-container) repository and make sure that the `libbelafull.so` has been copied to the `/root/Bela/lib/` directory on your Bela board.
 
 The cmake toolchain file to use with these examples is [Toolchain_Bela.cmake](./Toolchain_Bela.cmake).
 
