@@ -6,6 +6,7 @@
 #include "../models/configs/HybridNNConfig.h"
 #include "../models/configs/HybridNNPrePostProcessor.h"
 #include "../models/configs/SimpleGainConfig.h"
+#include "../models/configs/SimpleLinearNNConfig.h"
 
 /* ============================================================ *
  * ========================= Configs ========================== *
@@ -13,7 +14,7 @@
 
 #define NUM_ITERATIONS 5
 #define NUM_REPETITIONS 2
-#define BUFFER_SIZE 512
+#define BUFFER_SIZE 32
 #define SAMPLE_RATE 44100
 
 /* ============================================================ *
@@ -22,8 +23,10 @@
 
 typedef anira::benchmark::ProcessBlockFixture ProcessBlockFixture;
 
-anira::InferenceConfig my_inference_config = gain_config;
-anira::PrePostProcessor my_pp_processor(gain_config);
+anira::InferenceConfig my_inference_config = simple_linear_nn_config;
+anira::PrePostProcessor my_pp_processor(simple_linear_nn_config);
+// anira::InferenceConfig my_inference_config = gain_config;
+// anira::PrePostProcessor my_pp_processor(gain_config);
 // anira::InferenceConfig my_inference_config = hybridnn_config;
 // HybridNNPrePostProcessor my_pp_processor;
 
